@@ -262,27 +262,40 @@ function updateCart() {
 function buildWhatsAppMessage() {
   const items = [...cart.values()];
   const knownTotal = items.reduce((sum, item) => sum + (item.price === null ? 0 : item.price * item.quantity), 0);
-  const lines = items.map((item) => {
+  const lines = items.flatMap((item) => {
     const quantity = `${quantityFormat.format(item.quantity)} ${item.unit}`;
     const subtotal = item.price === null ? "precio a consultar" : formatMoney(item.price * item.quantity);
-    return `- ${item.name}: ${quantity} - ${subtotal}`;
+    return [`- ${item.name}:`, `   ${quantity} - ${subtotal}`];
   });
-  const name = document.getElementById("customer-name").value.trim();
-  const area = document.getElementById("delivery-area").value.trim();
+  const value = (id) => document.getElementById(id).value.trim();
+  const region = document.querySelector('input[name="delivery-region"]:checked')?.value;
+  const customer = [
+    ["Nombre y negocio", value("customer-name")],
+    ["Teléfono", value("customer-phone")],
+    ["Zona de entrega", value("delivery-area")],
+    ["Región", region]
+  ].filter(([, text]) => text).map(([label, text]) => `${label}: ${text}`);
+  const hasUnpriced = items.some((item) => item.price === null);
   const details = [
-    "Hola, quiero preparar este pedido mayorista:",
+    "*PEDIDO MAYORISTA*",
+    "Hola, quiero preparar este pedido:",
     "",
+    "*PRODUCTOS*",
     ...lines,
     "",
-    items.some((item) => item.price === null)
-      ? `Subtotal estimado de productos con precio: ${formatMoney(knownTotal)}`
-      : `Total estimado: ${formatMoney(knownTotal)}`,
-    "Entiendo que precios, disponibilidad y condiciones de entrega se confirman con el equipo.",
-    "El pago es anticipado."
+    "*TOTAL ESTIMADO*",
+    hasUnpriced
+      ? `${formatMoney(knownTotal)} (más productos a cotizar)`
+      : formatMoney(knownTotal),
+    ""
   ];
 
-  if (name) details.push(`Nombre y negocio: ${name}`);
-  if (area) details.push(`Zona de entrega: ${area}`);
+  if (customer.length) details.push("*MIS DATOS*", ...customer, "");
+  details.push(
+    "*CONDICIONES*",
+    "Precios, disponibilidad y entrega se confirman con el equipo.",
+    "El pago es anticipado."
+  );
 
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(details.join("\n"))}`;
 }

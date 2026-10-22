@@ -73,10 +73,17 @@
         <p class="cart-empty" id="cart-empty">Elegí productos de la lista de precios para empezar.</p>
         <ul class="cart-items" id="cart-items" aria-label="Productos seleccionados"></ul>
         <div class="cart-fields" hidden>
-          <label for="customer-name">Nombre y negocio <span>(opcional)</span></label>
+          <label for="customer-name">Nombre y negocio</label>
           <input id="customer-name" type="text" autocomplete="organization" placeholder="Ej.: Ana, Restaurante del Centro">
-          <label for="delivery-area">Zona de entrega <span>(opcional)</span></label>
+          <label for="customer-phone">Teléfono</label>
+          <input id="customer-phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="Ej.: 11 2345 6789">
+          <label for="delivery-area">Zona de entrega</label>
           <input id="delivery-area" type="text" autocomplete="address-level2" placeholder="Localidad o barrio">
+          <fieldset class="region-choice">
+            <legend>Región de entrega</legend>
+            <label><input type="radio" name="delivery-region" value="CABA (Capital Federal)"><span>CABA</span></label>
+            <label><input type="radio" name="delivery-region" value="GBA (Gran Buenos Aires)"><span>GBA</span></label>
+          </fieldset>
         </div>
         <div class="cart-total">
           <span>Total estimado</span>
