@@ -1,6 +1,6 @@
 const CATALOG = [
   {
-    name: "Vacuna",
+    name: "Carne Vacuna",
     products: [
       ["Asado Plancha", 13899],
       ["Asado Cortado Banderita a 13 C.", 13999],
