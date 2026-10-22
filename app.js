@@ -164,12 +164,15 @@ function renderCatalog() {
     const navLink = document.createElement("a");
     navLink.href = `#${categoryId}`;
     navLink.textContent = category.name;
+    navLink.addEventListener("click", () => {
+      document.getElementById(categoryId).open = true;
+    });
     navFragment.append(navLink);
 
     const group = document.createElement("details");
     group.className = "product-category";
     group.id = categoryId;
-    group.open = true;
+    group.open = category === CATALOG[0];
 
     const summary = document.createElement("summary");
     summary.append(document.createTextNode(category.name));
