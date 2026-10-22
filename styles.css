@@ -132,6 +132,11 @@ a {
   text-decoration: none;
 }
 
+.main-nav .nav-special {
+  display: none;
+  text-transform: uppercase;
+}
+
 .nav-order span {
   display: inline-grid;
   width: 22px;
@@ -280,8 +285,9 @@ h2 {
 }
 
 .conditions strong {
-  color: var(--forest);
+  color: #8a281d;
   font-size: 14px;
+  text-transform: uppercase;
 }
 
 .conditions span {
@@ -750,6 +756,14 @@ h2 {
 
   .main-nav > a:not(.nav-order) {
     display: none;
+  }
+
+  .main-nav .nav-order:not(.nav-special) {
+    display: none;
+  }
+
+  .main-nav .nav-special {
+    display: inline-flex;
   }
 
   .main-nav .nav-order {
