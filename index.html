@@ -22,7 +22,7 @@
         <img src="img/logo-la-granja-don-silvio-2026-white-560px.png" width="560" height="298" alt="La Granja Don Silvio">
       </a>
       <nav class="main-nav" aria-label="Navegación principal">
-        <a href="#catalogo">Catálogo</a>
+        <a href="#catalogo">Lista de Precios</a>
         <a href="#condiciones">Condiciones</a>
         <a class="nav-order" href="#pedido">Ver mi pedido <span id="header-count">0</span></a>
       </nav>
@@ -36,7 +36,7 @@
           <p class="hero-brandline">La mejor carne, siempre.</p>
           <h1 id="hero-title">El abastecimiento que acompaña tu negocio.</h1>
           <p>Precios mayoristas para restaurantes, hoteles, catering, clínicas y carnicerías.</p>
-          <a class="button button-red" href="#catalogo">Ver catálogo</a>
+          <a class="button button-red" href="#catalogo">Ver Lista de Precios</a>
         </div>
         <img class="hero-photo" src="img/mayorista-la-granja-don-silvio.jpg" width="600" height="360" alt="Cortes de carne vacuna en el frigorífico La Granja Don Silvio" fetchpriority="high">
       </section>
@@ -49,20 +49,13 @@
 
       <section class="catalog" id="catalogo" aria-labelledby="catalog-title">
         <div class="catalog-heading">
-          <div>
-            <h2 id="catalog-title">Elegí tus productos</h2>
-            <p>Indicá la cantidad en kilos o cajones y prepará tu pedido.</p>
-          </div>
-          <label class="search">
-            <span>Buscar en el catálogo</span>
-            <input id="product-search" type="search" autocomplete="off" placeholder="Ej.: vacío, pollo, bondiola">
-          </label>
+          <h2 id="catalog-title">Hacé tu pedido online</h2>
+          <p>Indicá la cantidad en kilos o cajones y prepará tu pedido.</p>
         </div>
-        <nav class="category-nav" id="category-nav" aria-label="Categorías del catálogo"></nav>
-        <p class="no-results" id="no-results" hidden>No encontramos productos con esa búsqueda. Probá con otro nombre.</p>
+        <nav class="category-nav" id="category-nav" aria-label="Categorías de la lista de precios"></nav>
         <div class="product-groups" id="product-groups" aria-live="polite">
           <noscript>
-            <p>Activá JavaScript para ver el catálogo y preparar tu pedido.</p>
+            <p>Activá JavaScript para ver la lista de precios y preparar tu pedido.</p>
           </noscript>
         </div>
       </section>
@@ -77,7 +70,7 @@
         <button class="cart-toggle" id="cart-toggle" type="button" aria-expanded="false" aria-controls="cart-body">Revisar pedido</button>
       </div>
       <div class="cart-body" id="cart-body">
-        <p class="cart-empty" id="cart-empty">Elegí productos del catálogo para empezar.</p>
+        <p class="cart-empty" id="cart-empty">Elegí productos de la lista de precios para empezar.</p>
         <ul class="cart-items" id="cart-items" aria-label="Productos seleccionados"></ul>
         <div class="cart-fields" hidden>
           <label for="customer-name">Nombre y negocio <span>(opcional)</span></label>

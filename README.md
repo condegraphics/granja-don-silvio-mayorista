@@ -1,6 +1,6 @@
 # La Granja Don Silvio Mayorista
 
-Catálogo interactivo de precios gastronómicos mayoristas. Los clientes eligen productos y cantidades, revisan el total estimado y envían el pedido a ventas por WhatsApp.
+Lista de precios interactiva. Los clientes eligen productos y cantidades, revisan el total estimado y envían el pedido a ventas por WhatsApp.
 
 ## Desarrollo local
 

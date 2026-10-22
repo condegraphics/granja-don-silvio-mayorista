@@ -131,12 +131,10 @@ function createProductRow(category, name, price, unit) {
   const id = slugify(`${category}-${name}`);
   const item = { id, category, name, price, unit: unit || "kg" };
   productById.set(id, item);
-  const step = item.unit === "kg" ? "0.5" : "1";
   const quantityLabel = item.unit === "kg" ? "kilogramos" : item.unit;
   const row = document.createElement("article");
   row.className = "product-row";
   row.dataset.productId = id;
-  row.dataset.search = `${category} ${name}`.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
   row.innerHTML = `
     <div class="product-info">
       <span class="product-name"></span>
@@ -144,7 +142,7 @@ function createProductRow(category, name, price, unit) {
     </div>
     <div class="quantity-control">
       <button type="button" data-delta="-1" aria-label="Quitar cantidad de ${name}">−</button>
-      <input type="number" min="0" step="${step}" value="0" inputmode="decimal" aria-label="Cantidad de ${name} en ${quantityLabel}">
+      <input type="number" min="0" step="1" value="0" inputmode="numeric" pattern="[0-9]*" aria-label="Cantidad de ${name} en ${quantityLabel}">
       <button type="button" data-delta="1" aria-label="Agregar cantidad de ${name}">+</button>
       <span class="quantity-unit">${item.unit}</span>
     </div>`;
@@ -195,7 +193,7 @@ function renderCatalog() {
 
 function getQuantity(row) {
   const input = row.querySelector('input[type="number"]');
-  const value = Number.parseFloat(input.value);
+  const value = Math.floor(Number(input.value));
   return Number.isFinite(value) && value > 0 ? value : 0;
 }
 
@@ -261,25 +259,6 @@ function updateCart() {
   renderCartItems(items);
 }
 
-function applySearch(query) {
-  const normalized = query.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
-  let visibleCount = 0;
-
-  document.querySelectorAll(".product-category").forEach((group) => {
-    let groupCount = 0;
-    group.querySelectorAll(".product-row").forEach((row) => {
-      const isVisible = !normalized || row.dataset.search.includes(normalized);
-      row.hidden = !isVisible;
-      if (isVisible) groupCount += 1;
-    });
-    group.hidden = groupCount === 0;
-    if (normalized && groupCount > 0) group.open = true;
-    visibleCount += groupCount;
-  });
-
-  document.getElementById("no-results").hidden = visibleCount > 0;
-}
-
 function buildWhatsAppMessage() {
   const items = [...cart.values()];
   const knownTotal = items.reduce((sum, item) => sum + (item.price === null ? 0 : item.price * item.quantity), 0);
@@ -316,9 +295,7 @@ document.getElementById("product-groups").addEventListener("click", (event) => {
   if (!button) return;
   const row = button.closest(".product-row");
   const input = row.querySelector('input[type="number"]');
-  const step = Number(input.step);
-  const next = Math.max(0, (Number.parseFloat(input.value) || 0) + Number(button.dataset.delta) * step);
-  input.value = Number(next.toFixed(2));
+  input.value = Math.max(0, getQuantity(row) + Number(button.dataset.delta));
   updateItem(row);
 });
 
@@ -327,8 +304,10 @@ document.getElementById("product-groups").addEventListener("input", (event) => {
   updateItem(event.target.closest(".product-row"));
 });
 
-document.getElementById("product-search").addEventListener("input", (event) => {
-  applySearch(event.target.value);
+document.getElementById("product-groups").addEventListener("change", (event) => {
+  if (!event.target.matches('input[type="number"]')) return;
+  const row = event.target.closest(".product-row");
+  event.target.value = getQuantity(row);
 });
 
 document.getElementById("cart-toggle").addEventListener("click", (event) => {
