@@ -244,8 +244,7 @@ function updateCart() {
   const totalLabel = document.getElementById("cart-total");
   const countLabel = document.getElementById("order-count");
 
-  document.getElementById("header-count").textContent = itemCount;
-  countLabel.textContent = itemCount === 0
+  document.getElementById("order-count").textContent = itemCount === 0
     ? "Todavía no agregaste productos"
     : `${itemCount} ${itemCount === 1 ? "producto" : "productos"}`;
   document.getElementById("cart-empty").hidden = itemCount > 0;
